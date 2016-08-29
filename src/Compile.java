@@ -35,7 +35,7 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        String[] test = {"--db"};
+        String[] test = {"man"};
         Arguments.getInstance().setArguments(test);
         
         //Check si les arguments passés existent dans les possibilites du soft
