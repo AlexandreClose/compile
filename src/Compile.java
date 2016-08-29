@@ -11,6 +11,7 @@ import compile.util.Pom;
 import compile.util.Project;
 import compile.util.PropertiesFile;
 import compile.util.Tomcat;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ public class Compile{
      */
     
     private static final String POM_FILE = "pom.xml";
+    private static final String SEP = File.separator;
     
     public static void main( String[] args ) {
         
@@ -44,7 +46,7 @@ public class Compile{
             for (Map.Entry<String,String> entry : PropertiesFile.getInstance().getMapParameters().entrySet()){
                  if ( entry.getKey().contains( "plugin")){
                      if (entry.getValue()!=null && !entry.getValue().equals("")){
-                         Pom pom = new Pom(entry.getValue()+"\\"+POM_FILE);
+                         Pom pom = new Pom(entry.getValue()+SEP+POM_FILE);
                          Project project = pom.computeProjectFromPom();
                          Plugin plugin = (Plugin)project;
                          System.out.println("Plugin installé dans M2 : "+plugin.getArtifactId()+" avec la version : "+plugin.getVersion());
@@ -63,7 +65,7 @@ public class Compile{
         }
         
         if (PropertiesFile.getInstance().hasParam("workingDir")){
-            Pom pom = new Pom(PropertiesFile.getInstance().getParam( "workingDir")+"\\"+POM_FILE);
+            Pom pom = new Pom(PropertiesFile.getInstance().getParam( "workingDir")+SEP+POM_FILE);
             Project proj = pom.computeProjectFromPom();
             for (Map.Entry<String,String> entry : proj.getMapDependencies().entrySet()){
                 for (Plugin plug : listInstalledPlugin){
