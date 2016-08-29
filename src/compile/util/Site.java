@@ -28,11 +28,6 @@ public class Site extends Project{
     }
     
     @Override
-    public void adaptDBProperties(){
-        
-    }
-    
-    @Override
     public void adaptDBProperties(String pathDbProperties){
         
     }

@@ -25,9 +25,4 @@ public class Plugin extends Project{
         Command.run(PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnInstallM2Cmd") ,super.getPathProject());
     }
     
-    @Override
-    public void adaptDBProperties(){
-        super.adaptDBProperties(getPathProject()+SEP+"target"+SEP+"lutece"+SEP+"WEB-INF"+SEP+"conf"+SEP+"db.properties");
-    }
-    
 }

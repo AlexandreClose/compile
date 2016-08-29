@@ -35,7 +35,7 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        String[] test = {"--ant","--compile"};
+        String[] test = {"--db"};
         Arguments.getInstance().setArguments(test);
         
         //Check si les arguments passés existent dans les possibilites du soft
@@ -110,12 +110,13 @@ public class Compile{
             if ( PropertiesFile.getInstance().mustAdaptDBProperties() ){
                 proj.adaptDBProperties();
             }
+            
             //Pour executer les scripts ant
             if ( PropertiesFile.getInstance().mustAnt() ){
                 proj.ant();
             }
         }
-  
+        
         //Allume le serveur si c'est demandé par l'argument --restart
         if ( PropertiesFile.getInstance().mustRestartServer() ){
             Tomcat.getInstance().start();
