@@ -18,20 +18,21 @@ public class PropertiesFile{
     
     private static PropertiesFile _instance;
     private static String _fileName;
-    private Properties _properties;
+    private PropertiesUtil _propertiesUtil;
     
     private static final String CONFIG_FILE = "config.properties";
     
     public PropertiesFile(){        
     }
-    
-    public Properties getProperties() {
-        return _properties;
+
+    public PropertiesUtil getPropertiesUtil() {
+        return _propertiesUtil;
     }
 
-    public void setProperties( Properties _properties ) {
-        this._properties = _properties;
+    public void setPropertiesUtil( PropertiesUtil _propertiesUtil ) {
+        this._propertiesUtil = _propertiesUtil;
     }
+    
     
     public String getFileName() {
         return _fileName;
@@ -47,43 +48,12 @@ public class PropertiesFile{
         }else{
             _instance = new PropertiesFile();
             _instance.setFileName( CONFIG_FILE );
-            _instance.setProperties(_instance.loadProperties() );
+            _instance.setPropertiesUtil(new PropertiesUtil(CONFIG_FILE) );
             
         }
         return _instance;
     }
 
-    
-    
-    
-    /**
-     * return MapOfProperties
-     * @param fileName the relative path of 
-     */
-    public Properties loadProperties(  ) {
-        HashMap<String,String> map = new HashMap<String,String>();
-        InputStream inputStream;
-        try{
-           
-            Properties prop = new Properties();
-            String propFileName = "config.properties";
-            
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-            if (inputStream != null) {
-                prop.load(inputStream);
-                inputStream.close();
-                return prop;
-            }
-            else {
-                throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
-            }
-        }catch (Exception e) {
-			System.out.println("Exception: " + e);
-		} 
-        
- 
-        return null;
-    }
     
     public boolean mustRestartServer(){
         for (String arg : Arguments.getInstance().getArguments()){
@@ -136,22 +106,4 @@ public class PropertiesFile{
         return false;
     }
     
-    
-    
-    public String getParam(String paramName){
-        return _properties.getProperty(paramName );
-    }
-    
-    public void showProperties(){
-        for (String key : _properties.stringPropertyNames()){
-            System.out.println("key : " + key + "   |   " + _properties.getProperty( key ));
-        }
-    }
-    
-    public boolean hasProperty(String param){
-        if (_properties.containsKey( param )){
-            return true;
-        }
-        return false;
-    }
 }

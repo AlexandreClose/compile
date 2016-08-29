@@ -24,7 +24,7 @@ public class Site extends Project{
     
     Site(){
         super.setTypeProject( "site");
-        super.setMavenCmdCompil( PropertiesFile.getInstance().getParam( "mvnSiteCompilCmd" ));
+        super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" ));
     }
     
     @Override

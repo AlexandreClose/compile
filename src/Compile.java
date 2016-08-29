@@ -49,7 +49,7 @@ public class Compile{
         Arguments.getInstance().checkMan();
 
         
-        PropertiesFile.getInstance().showProperties();
+        PropertiesFile.getInstance().getPropertiesUtil().showProperties();
         
         //Eteint le server Tomcat si c'est demandé par l'argument --restart
         if ( PropertiesFile.getInstance().mustRestartServer() ){
@@ -59,10 +59,10 @@ public class Compile{
         //Si l'utilisateur veut installer des plugins de travail dans le répertoire m2
         List<Plugin> listInstalledPlugin= new ArrayList<Plugin>(); 
         if(PropertiesFile.getInstance().mustM2()){
-            for (String key : PropertiesFile.getInstance().getProperties().stringPropertyNames()){
+            for (String key : PropertiesFile.getInstance().getPropertiesUtil().getProperties().stringPropertyNames()){
                  if ( key.contains( "plugin")){
-                     if (PropertiesFile.getInstance().getProperties().get( key )!=null && !PropertiesFile.getInstance().getProperties().get( key ).equals("")){
-                         Pom pom = new Pom(PropertiesFile.getInstance().getProperties().get( key )+"\\"+POM_FILE);
+                     if (PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )!=null && !PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key ).equals("")){
+                         Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )+"\\"+POM_FILE);
                          Project project = pom.computeProjectFromPom();
                          Plugin plugin = (Plugin)project;
                          System.out.println("Plugin installé dans M2 : "+plugin.getArtifactId()+" avec la version : "+plugin.getVersion());
@@ -80,8 +80,8 @@ public class Compile{
             }
         }
         
-        if (PropertiesFile.getInstance().hasProperty("workingDir")){
-            Pom pom = new Pom(PropertiesFile.getInstance().getParam( "workingDir")+"\\"+POM_FILE);
+        if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty("workingDir")){
+            Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir")+"\\"+POM_FILE);
             //Récupere le projet (site ou plugin) du pom
             Project proj = pom.computeProjectFromPom();
             //Ajoute le site ou projet dans le contexte du Tomcat si n'est pas déjà existant

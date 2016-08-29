@@ -88,7 +88,7 @@ public abstract class Project implements IProject{
     
     @Override
     public void ant(){
-        Command.run( PropertiesFile.getInstance().getParam( "antCmd" ) ,_pathProject+"\\target\\"+_webappName+"\\WEB-INF\\sql");
+        Command.run( PropertiesFile.getInstance().getPropertiesUtil().getParam( "antCmd" ) ,_pathProject+"\\target\\"+_webappName+"\\WEB-INF\\sql");
     }
     
     @Override
