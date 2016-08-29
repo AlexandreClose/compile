@@ -5,6 +5,7 @@
  */
 package compile.util;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -19,6 +20,7 @@ public abstract class Project implements IProject{
     private String _version;
     private String _artifactId;
     private HashMap<String,String> _mapDependencies;
+    private static final String SEP = File.separator;
     
     public String getArtifactId() {
         return _artifactId;
@@ -88,7 +90,7 @@ public abstract class Project implements IProject{
     
     @Override
     public void ant(){
-        Command.run( PropertiesFile.getInstance().getPropertiesUtil().getParam( "antCmd" ) ,_pathProject+"\\target\\"+_webappName+"\\WEB-INF\\sql");
+        Command.run( PropertiesFile.getInstance().getPropertiesUtil().getParam( "antCmd" ) ,_pathProject+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"sql");
     }
     
     @Override

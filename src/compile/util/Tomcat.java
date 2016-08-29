@@ -5,6 +5,7 @@
  */
 package compile.util;
 
+import java.io.File;
 import java.util.List;
 import org.jdom2.Element;
 
@@ -21,6 +22,7 @@ public class Tomcat{
     private String _tomcatStartUpCmd;
     private String _tomcatShutdownCmd;
     private XMLUtil _serverXml;
+    private static final String SEP = File.separator;    
     
     public static Tomcat getInstance() {
         if (_instance != null){
@@ -82,13 +84,13 @@ public class Tomcat{
         List<Element> listContext = host.getChildren( "Context" , null );
         boolean notInContext = true;
         for (Element context : listContext){
-            if(context.getAttributeValue( "docBase" ).equals(proj.getPathProject()+"\\target\\"+proj.getWebappName())){
+            if(context.getAttributeValue( "docBase" ).equals(proj.getPathProject()+SEP+"target"+SEP+proj.getWebappName())){
                 notInContext=false;
             }
         }
         if (notInContext){          
             host.addContent( new Element("Context")
-                    .setAttribute("docBase",proj.getPathProject()+"\\target\\"+proj.getWebappName() )
+                    .setAttribute("docBase",proj.getPathProject()+SEP+"target"+SEP+proj.getWebappName() )
                     .setAttribute( "path", PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDirContext" ))
                     .setAttribute( "reloadable", "true"));
             _serverXml.save();

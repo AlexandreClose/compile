@@ -5,6 +5,8 @@
  */
 package compile.util;
 
+import java.io.File;
+
 /**
  *
  * @author closea
@@ -12,7 +14,8 @@ package compile.util;
 public class Plugin extends Project{
 
     private static final String PLUGIN_TYPE = "plugin";
-    
+    private static final String SEP = File.separator;
+       
     Plugin(){
         super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnPluginCompilCmd"));
         super.setTypeProject( PLUGIN_TYPE);
@@ -24,7 +27,7 @@ public class Plugin extends Project{
     
     @Override
     public void adaptDBProperties(){
-        super.adaptDBProperties(getPathProject()+"\\target\\lutece\\WEB-INF\\conf\\db.properties");
+        super.adaptDBProperties(getPathProject()+SEP+"target"+SEP+"lutece"+SEP+"WEB-INF"+SEP+"conf"+SEP+"db.properties");
     }
     
 }

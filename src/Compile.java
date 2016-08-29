@@ -12,6 +12,7 @@ import compile.util.Pom;
 import compile.util.Project;
 import compile.util.PropertiesFile;
 import compile.util.Tomcat;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,7 @@ public class Compile{
      */
     
     private static final String POM_FILE = "pom.xml";
+    private static final String SEP = File.separator;
     
     public static void main( String[] args ) {
         
@@ -59,10 +61,11 @@ public class Compile{
         //Si l'utilisateur veut installer des plugins de travail dans le répertoire m2
         List<Plugin> listInstalledPlugin= new ArrayList<Plugin>(); 
         if(PropertiesFile.getInstance().mustM2()){
+
             for (String key : PropertiesFile.getInstance().getPropertiesUtil().getProperties().stringPropertyNames()){
                  if ( key.contains( "plugin")){
                      if (PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )!=null && !PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key ).equals("")){
-                         Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )+"\\"+POM_FILE);
+                         Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )+SEP+POM_FILE);
                          Project project = pom.computeProjectFromPom();
                          Plugin plugin = (Plugin)project;
                          System.out.println("Plugin installé dans M2 : "+plugin.getArtifactId()+" avec la version : "+plugin.getVersion());
@@ -81,7 +84,7 @@ public class Compile{
         }
         
         if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty("workingDir")){
-            Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir")+"\\"+POM_FILE);
+            Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir")+SEP+POM_FILE);
             //Récupere le projet (site ou plugin) du pom
             Project proj = pom.computeProjectFromPom();
             //Ajoute le site ou projet dans le contexte du Tomcat si n'est pas déjà existant
