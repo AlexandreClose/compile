@@ -5,6 +5,7 @@
  */
 
 
+import compile.exceptions.ArgumentInvalidException;
 import compile.util.Arguments;
 import compile.util.Plugin;
 import compile.util.Pom;
@@ -34,19 +35,37 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        Arguments.getInstance().setArguments(args);
+        String[] test = {"--ant","--compile"};
+        Arguments.getInstance().setArguments(test);
+        
+        //Check si les arguments passés existent dans les possibilites du soft
+        try{
+            Arguments.getInstance().checkArgument();
+        }
+        catch (ArgumentInvalidException e){
+            System.out.println(e.getMessage());
+            System.exit( 0 );
+        }
+        
+        //check si l'utilisateur fait appel au manuel d'utilisation
+        Arguments.getInstance().checkMan();
 
+        
+        PropertiesFile.getInstance().getPropertiesUtil().showProperties();
+        
+        //Eteint le server Tomcat si c'est demandé par l'argument --restart
         if ( PropertiesFile.getInstance().mustRestartServer() ){
             Tomcat.getInstance().stop();
         }
         
+        //Si l'utilisateur veut installer des plugins de travail dans le répertoire m2
         List<Plugin> listInstalledPlugin= new ArrayList<Plugin>(); 
-        
         if(PropertiesFile.getInstance().mustM2()){
-            for (Map.Entry<String,String> entry : PropertiesFile.getInstance().getMapParameters().entrySet()){
-                 if ( entry.getKey().contains( "plugin")){
-                     if (entry.getValue()!=null && !entry.getValue().equals("")){
-                         Pom pom = new Pom(entry.getValue()+SEP+POM_FILE);
+
+            for (String key : PropertiesFile.getInstance().getPropertiesUtil().getProperties().stringPropertyNames()){
+                 if ( key.contains( "plugin")){
+                     if (PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )!=null && !PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key ).equals("")){
+                         Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )+SEP+POM_FILE);
                          Project project = pom.computeProjectFromPom();
                          Plugin plugin = (Plugin)project;
                          System.out.println("Plugin installé dans M2 : "+plugin.getArtifactId()+" avec la version : "+plugin.getVersion());
@@ -57,19 +76,23 @@ public class Compile{
              }
         } 
         
-        
+        //Les plugins de travail sont listés avec leur version
         for (Plugin plug : listInstalledPlugin){
             for (Map.Entry<String,String> entry : plug.getMapDependencies().entrySet()){
                 System.out.println("dependance : "+entry.getKey()+ " version :"+entry.getValue() );
             }
         }
         
-        if (PropertiesFile.getInstance().hasParam("workingDir")){
-            Pom pom = new Pom(PropertiesFile.getInstance().getParam( "workingDir")+SEP+POM_FILE);
+        if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty("workingDir")){
+            Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir")+SEP+POM_FILE);
+            //Récupere le projet (site ou plugin) du pom
             Project proj = pom.computeProjectFromPom();
+            //Ajoute le site ou projet dans le contexte du Tomcat si n'est pas déjà existant
+            Tomcat.getInstance().checkIfInContextFile(proj);
             for (Map.Entry<String,String> entry : proj.getMapDependencies().entrySet()){
                 for (Plugin plug : listInstalledPlugin){
                     if (plug.getArtifactId().equals(entry.getKey())){
+                        //Si les versions des plugins (entre le m2 et le site/plugin principal) ne sont pas les mêmes.
                         if (!plug.getVersion().equals( entry.getValue() )){
                             System.out.println("Les version du plugin "+plug.getArtifactId()+" ne concordent pas dans le working dir et les plugins M2 !");
                             System.exit( 0 );
@@ -77,16 +100,23 @@ public class Compile{
                     }
                 }
             }
-            proj.compile();
+            
+            //Pour compiler le projet
+            if ( PropertiesFile.getInstance().mustCompile() ){
+                proj.compile();
+            }
+
+            //Pour changer les valeurs du DBProperties du target
             if ( PropertiesFile.getInstance().mustAdaptDBProperties() ){
                 proj.adaptDBProperties();
             }
+            //Pour executer les scripts ant
             if ( PropertiesFile.getInstance().mustAnt() ){
                 proj.ant();
             }
         }
   
-        
+        //Allume le serveur si c'est demandé par l'argument --restart
         if ( PropertiesFile.getInstance().mustRestartServer() ){
             Tomcat.getInstance().start();
         }

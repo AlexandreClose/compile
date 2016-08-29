@@ -5,13 +5,10 @@
  */
 package compile.util;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Properties;
 
 /**
  *
@@ -21,24 +18,22 @@ public class PropertiesFile{
     
     private static PropertiesFile _instance;
     private static String _fileName;
-    private HashMap<String,String> _mapParameters;
+    private PropertiesUtil _propertiesUtil;
     
     private static final String CONFIG_FILE = "config.properties";
-
-    
-            
-
-    public HashMap<String , String> getMapParameters() {
-        return _mapParameters;
-    }
-
-    public void setMapParameters( HashMap<String , String> _mapParameters ) {
-        this._mapParameters = _mapParameters;
-    }
     
     public PropertiesFile(){        
     }
 
+    public PropertiesUtil getPropertiesUtil() {
+        return _propertiesUtil;
+    }
+
+    public void setPropertiesUtil( PropertiesUtil _propertiesUtil ) {
+        this._propertiesUtil = _propertiesUtil;
+    }
+    
+    
     public String getFileName() {
         return _fileName;
     }
@@ -53,47 +48,12 @@ public class PropertiesFile{
         }else{
             _instance = new PropertiesFile();
             _instance.setFileName( CONFIG_FILE );
-            _instance.setMapParameters( _instance.getPropertiesMap() );
+            _instance.setPropertiesUtil(new PropertiesUtil(CONFIG_FILE) );
             
         }
         return _instance;
     }
 
-    
-    
-    
-    /**
-     * return MapOfProperties
-     * @param fileName the relative path of 
-     */
-    public HashMap<String,String> getPropertiesMap(  ) {
-        HashMap<String,String> map = new HashMap<String,String>();
-        try{
-            
-            InputStream inputStream = new FileInputStream( _fileName );
-            InputStreamReader inputStreamReader = new InputStreamReader (inputStream);
-            String line = null;
-            try{
-                BufferedReader bufferReader = new BufferedReader(inputStreamReader);
-                 while ((line = bufferReader.readLine()) != null) {
-                    String[] tab = line.split("=");
-                    if (tab.length == 2){
-                        map.put( tab[0] , tab[1]);
-                    }
-                    else{
-                        
-                    }
-                    
-                }       
-            }catch(Exception e){
-                 e.printStackTrace();
-            }
-        }
-        catch(FileNotFoundException e){
-            System.out.println("Fichier de configuration manquant");
-        }
-        return map;
-    }
     
     public boolean mustRestartServer(){
         for (String arg : Arguments.getInstance().getArguments()){
@@ -125,6 +85,18 @@ public class PropertiesFile{
         return false;
     }
     
+    public boolean mustCompile(){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_COMPILE)){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    
+    
     public boolean mustAdaptDBProperties(){
         for (String arg : Arguments.getInstance().getArguments()){
             if (arg.equals(Arguments.getInstance().MARK_DB)){
@@ -134,24 +106,4 @@ public class PropertiesFile{
         return false;
     }
     
-    
-    
-    public String getParam(String paramName){
-        return _mapParameters.get( paramName );
-    }
-    
-    public void showMapParams(){
-        for (Entry<String,String> entry : _mapParameters.entrySet()){
-            System.out.println("key : " + entry.getKey() + "   |   " + entry.getValue());
-        }
-    }
-    
-    public boolean hasParam(String param){
-        if (_mapParameters.containsKey( param )){
-            if (_mapParameters.get( param )!=null && !_mapParameters.get( param ).equals("")){
-                return true;
-            }
-        }
-        return false;
-    }
 }

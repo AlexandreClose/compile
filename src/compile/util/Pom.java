@@ -117,14 +117,11 @@ public class Pom{
             project = new Plugin();
         }
         else{return null;}
-        project.setPathProject(PropertiesFile.getInstance().getParam( "workingDir") );
+        project.setPathProject(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir") );
         project.setWebappName( getWebAppNameFromProjectType(project));
         project.setVersion(getVersion());
         project.setMapDependancies( getMapDependencies() );
         project.setArtifactId( getArtifactId());
-        if (PropertiesFile.getInstance().hasParam("workingDirContext")){
-            Tomcat.getInstance().checkIfInContextFile(project);
-        }
         return project;
     }
     

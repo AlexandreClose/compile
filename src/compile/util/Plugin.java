@@ -17,12 +17,12 @@ public class Plugin extends Project{
     private static final String SEP = File.separator;
        
     Plugin(){
-        super.setMavenCmdCompil( PropertiesFile.getInstance().getParam( "mvnPluginCompilCmd"));
+        super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnPluginCompilCmd"));
         super.setTypeProject( PLUGIN_TYPE);
     }
     
     public void installInM2(){
-        Command.run(PropertiesFile.getInstance().getParam( "mvnInstallM2Cmd") ,super.getPathProject());
+        Command.run(PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnInstallM2Cmd") ,super.getPathProject());
     }
     
     @Override

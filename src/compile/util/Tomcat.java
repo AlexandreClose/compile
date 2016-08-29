@@ -59,10 +59,10 @@ public class Tomcat{
     }
     
     private Tomcat( ){
-        _tomcatPath=PropertiesFile.getInstance().getParam( "tomcatPath" );
-        _tomcatStartUpCmd=PropertiesFile.getInstance().getParam( "tomcatStartUpCmd" );
-        _tomcatShutdownCmd=PropertiesFile.getInstance().getParam( "tomcatShutdownCmd" );
-        _serverXml = new XMLUtil(PropertiesFile.getInstance().getParam( "tomcatServerXmlPath" ));
+        _tomcatPath=PropertiesFile.getInstance().getPropertiesUtil().getParam( "tomcatPath" );
+        _tomcatStartUpCmd=PropertiesFile.getInstance().getPropertiesUtil().getParam( "tomcatStartUpCmd" );
+        _tomcatShutdownCmd=PropertiesFile.getInstance().getPropertiesUtil().getParam( "tomcatShutdownCmd" );
+        _serverXml = new XMLUtil(PropertiesFile.getInstance().getPropertiesUtil().getParam( "tomcatServerXmlPath" ));
     }
     
     public void start(){
@@ -91,7 +91,7 @@ public class Tomcat{
         if (notInContext){          
             host.addContent( new Element("Context")
                     .setAttribute("docBase",proj.getPathProject()+SEP+"target"+SEP+proj.getWebappName() )
-                    .setAttribute( "path", PropertiesFile.getInstance().getParam( "workingDirContext" ))
+                    .setAttribute( "path", PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDirContext" ))
                     .setAttribute( "reloadable", "true"));
             _serverXml.save();
         }
