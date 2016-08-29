@@ -12,7 +12,7 @@ package compile.util;
 public class Site extends Project{
     private static final String MAVEN_CMD_PROFILE = "-P";
             
-    private String _profile;
+    private String _profile=null;
 
     public String getProfile() {
         return _profile;
@@ -24,7 +24,15 @@ public class Site extends Project{
     
     Site(){
         super.setTypeProject( "site");
-        super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" ));
+        
+        if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty( "profile")){
+            setProfile(PropertiesFile.getInstance().getPropertiesUtil().getParam( "profile") );
+            super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" )+" "+PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnProfileCmd" )+" "+PropertiesFile.getInstance().getPropertiesUtil().getParam( "profile" ));
+        }
+        else{
+            super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" ));
+        }
+       
     }
     
     @Override
