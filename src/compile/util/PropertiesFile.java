@@ -24,10 +24,7 @@ public class PropertiesFile{
     private HashMap<String,String> _mapParameters;
     
     private static final String CONFIG_FILE = "config.properties";
-    private static final String MARK_RESTART_TOMCAT = "--restart";
-    private static final String MARK_ANT = "--ant";
-    private static final String MARK_M2 = "--m2";
-    private static final String MARK_DB = "--db";
+
     
             
 
@@ -99,8 +96,8 @@ public class PropertiesFile{
     }
     
     public boolean mustRestartServer(){
-        for (String arg : Arguments.getArguments()){
-            if (arg.equals(MARK_RESTART_TOMCAT)){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_RESTART_TOMCAT)){
                 return true;
             }
         }
@@ -109,8 +106,8 @@ public class PropertiesFile{
     }
     
     public boolean mustAnt(){
-        for (String arg : Arguments.getArguments()){
-            if (arg.equals(MARK_ANT)){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_ANT)){
                 return true;
             }
         }
@@ -119,8 +116,8 @@ public class PropertiesFile{
     }
     
     public boolean mustM2(){
-        for (String arg : Arguments.getArguments()){
-            if (arg.equals(MARK_M2)){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_M2)){
                 return true;
             }
         }
@@ -129,8 +126,8 @@ public class PropertiesFile{
     }
     
     public boolean mustAdaptDBProperties(){
-        for (String arg : Arguments.getArguments()){
-            if (arg.equals(MARK_DB)){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_DB)){
                 return true;
             }
         }

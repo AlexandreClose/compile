@@ -32,7 +32,7 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        Arguments.setArguments(args);
+        Arguments.getInstance().setArguments(args);
 
         if ( PropertiesFile.getInstance().mustRestartServer() ){
             Tomcat.getInstance().stop();

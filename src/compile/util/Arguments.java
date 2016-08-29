@@ -10,15 +10,34 @@ package compile.util;
  * @author closea
  */
 public class Arguments{
+    
+    private static Arguments _instance;
     private static String[] _arguments;
+    public final String MARK_RESTART_TOMCAT = "--restart";
+    public final String MARK_ANT = "--ant";
+    public final String MARK_M2 = "--m2";
+    public final String MARK_DB = "--db";
 
-    public static String[] getArguments() {
+    public String[] getArguments() {
         return _arguments;
     }
+    
+    private Arguments(){
+    }
 
-    public static void setArguments( String[] _arguments ) {
+    public void setArguments( String[] _arguments ) {
         Arguments._arguments = _arguments;
     }
+    public static Arguments getInstance() {
+        if (_instance != null){
+            return _instance;
+        }else{
+            _instance = new Arguments();
+            
+        }
+        return _instance;
+    }
+    
     
     
 }
