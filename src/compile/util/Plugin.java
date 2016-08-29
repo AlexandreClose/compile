@@ -24,7 +24,7 @@ public class Plugin extends Project{
     
     @Override
     public void adaptDBProperties(){
-        super.adaptDBProperties(getPathProject()+"\\target\\lutece\\WEB-INF\\conf\\db.properties);
+        super.adaptDBProperties(getPathProject()+"\\target\\lutece\\WEB-INF\\conf\\db.properties");
     }
     
 }

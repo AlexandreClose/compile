@@ -3,17 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/XMLUtil.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Arguments.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Site.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/Compile.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Pom.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Project.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Tomcat.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Command.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/IProject.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/PropertiesFile.java</file>
-            <file>file:/C:/Users/closea/Documents/NetBeansProjects/Compile/src/compile/util/Plugin.java</file>
+            <file>file:/C:/Users/closea/Desktop/compile/src/compile/util/XMLUtil.java</file>
+            <file>file:/C:/Users/closea/Desktop/compile/src/compile/util/Plugin.java</file>
+            <file>file:/C:/Users/closea/Desktop/compile/src/compile/util/Pom.java</file>
         </group>
     </open-files>
 </project-private>
