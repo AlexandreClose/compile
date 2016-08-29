@@ -122,9 +122,6 @@ public class Pom{
         project.setVersion(getVersion());
         project.setMapDependancies( getMapDependencies() );
         project.setArtifactId( getArtifactId());
-        if (PropertiesFile.getInstance().hasParam("workingDirContext")){
-            Tomcat.getInstance().checkIfInContextFile(project);
-        }
         return project;
     }
     
