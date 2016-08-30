@@ -6,15 +6,9 @@
 package compile.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Properties;
+import java.util.List;
 
 /**
  *
@@ -111,6 +105,28 @@ public abstract class Project implements IProject{
             dbProperties.setParam( "portal.password" ,PropertiesFile.getInstance().getPropertiesUtil().getParam("mdp")) ;
             dbProperties.setParam( "portal.url" ,poolUrl) ;
             dbProperties.save( propFileName );
+    }
+    
+    @Override
+    public void pluginDat( ){
+        List<String> listPlugins = new ArrayList<String>();
+        String pathPluginXmlFiles = getPathProject()+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"plugins"+SEP;
+        String pathPluginDat = pathPluginXmlFiles + "plugin.dat";
+        File folder = new File(pathPluginXmlFiles);
+        File[] listOfFiles = folder.listFiles();
+        for (int i = 0; i < listOfFiles.length; i++) {
+          if (listOfFiles[i].isFile()) {
+            if (listOfFiles[i].getName().contains( ".xml")){
+                System.out.println(listOfFiles[i].getName());
+                listPlugins.add(listOfFiles[i].getName().split("\\.")[0]);
+            }
+          } 
+        }
+        PropertiesUtil pluginDatProperties = new PropertiesUtil();
+        for (String plugin : listPlugins){
+            pluginDatProperties.setParam(plugin+".installed","1");
+        }
+        pluginDatProperties.save( pathPluginDat );
     }
     
 }

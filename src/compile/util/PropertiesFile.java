@@ -106,4 +106,13 @@ public class PropertiesFile{
         return false;
     }
     
+    public boolean mustInitializePluginDat(){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_PLUGIN_DAT)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

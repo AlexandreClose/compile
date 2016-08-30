@@ -35,7 +35,7 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        String[] test = {"--db"};
+        String[] test = {"--pluginDat"};
         Arguments.getInstance().setArguments(test);
         
         //Check si les arguments passés existent dans les possibilites du soft
@@ -61,7 +61,6 @@ public class Compile{
         //Si l'utilisateur veut installer des plugins de travail dans le répertoire m2
         List<Plugin> listInstalledPlugin= new ArrayList<Plugin>(); 
         if(PropertiesFile.getInstance().mustM2()){
-
             for (String key : PropertiesFile.getInstance().getPropertiesUtil().getProperties().stringPropertyNames()){
                  if ( key.contains( "plugin")){
                      if (PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )!=null && !PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key ).equals("")){
@@ -114,6 +113,11 @@ public class Compile{
             //Pour executer les scripts ant
             if ( PropertiesFile.getInstance().mustAnt() ){
                 proj.ant();
+            }
+            
+            //Pour initialiser le fichier plugin.dat avec tous les plugins installés
+            if ( PropertiesFile.getInstance().mustInitializePluginDat() ){
+                proj.pluginDat();
             }
         }
         

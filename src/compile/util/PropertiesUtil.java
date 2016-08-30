@@ -51,6 +51,10 @@ public class PropertiesUtil{
         
 
     }
+    public PropertiesUtil(){
+        _properties = new Properties();
+    }
+    
 
     public String getParam(String paramName){
         return _properties.getProperty(paramName );
