@@ -11,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Properties;
 
 /**
@@ -74,16 +76,15 @@ public class PropertiesUtil{
     }
     
     public void save(String fileName){
-        OutputStream outputStream;
-        OutputStreamWriter outputStreamWriter;
+        PrintWriter printWriter;
         try{
-            outputStream = new FileOutputStream(fileName);
-            outputStreamWriter = new OutputStreamWriter(outputStream);
+            printWriter = new PrintWriter(new FileWriter(fileName));
             
-            _properties.store(outputStreamWriter, null);
+            for (String key : _properties.stringPropertyNames()){
+                printWriter.println(key + "=" + _properties.getProperty( key ));
+            }
             
-            outputStream.close();
-            outputStreamWriter.close();
+            printWriter.close();
         }
         catch (Exception e) {
             System.out.println("Erreur d'écriture du fichier " + fileName);
