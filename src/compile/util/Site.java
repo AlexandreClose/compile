@@ -31,13 +31,6 @@ public class Site extends Project{
         }
         else{
             super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" ));
-        }
-       
+        }  
     }
-    
-    @Override
-    public void adaptDBProperties(String pathDbProperties){
-        
-    }
-
 }

@@ -20,7 +20,7 @@ public class PropertiesFile{
     private static String _fileName;
     private PropertiesUtil _propertiesUtil;
     
-    private static final String CONFIG_FILE = "config.properties";
+    private static final String CONFIG_FILE = "src/compile/properties/config.properties";
     
     public PropertiesFile(){        
     }
