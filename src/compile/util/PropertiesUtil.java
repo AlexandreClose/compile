@@ -81,6 +81,7 @@ public class PropertiesUtil{
     
     public void save(String fileName){
         PrintWriter printWriter;
+        System.out.println("testtestest");
         try{
             printWriter = new PrintWriter(new FileWriter(fileName));
             

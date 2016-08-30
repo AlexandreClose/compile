@@ -12,6 +12,7 @@ package compile.util;
 public interface IProject{
     public void compile();
     public void ant();
+    public void clean();
     public void adaptDBProperties();
     public void pluginDat();
 }

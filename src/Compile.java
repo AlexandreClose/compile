@@ -35,7 +35,8 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        String[] test = {"--pluginDat"};
+        String[] test = {"--db","--compile"};
+        
         Arguments.getInstance().setArguments(test);
         
         //Check si les arguments passés existent dans les possibilites du soft
@@ -86,6 +87,7 @@ public class Compile{
             Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir")+SEP+POM_FILE);
             //Récupere le projet (site ou plugin) du pom
             Project proj = pom.computeProjectFromPom();
+            
             //Ajoute le site ou projet dans le contexte du Tomcat si n'est pas déjà existant
             Tomcat.getInstance().checkIfInContextFile(proj);
             for (Map.Entry<String,String> entry : proj.getMapDependencies().entrySet()){
@@ -98,6 +100,11 @@ public class Compile{
                         }
                     }
                 }
+            }
+            
+            //Clean le projet
+            if ( PropertiesFile.getInstance().mustClean()){
+                proj.clean();
             }
             
             //Pour compiler le projet

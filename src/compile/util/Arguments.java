@@ -23,6 +23,7 @@ public class Arguments{
     public final String MARK_M2 = "--m2";
     public final String MARK_DB = "--db";
     public final String MARK_PLUGIN_DAT = "--pluginDat";
+    public final String MARK_CLEAN = "--clean";
     public final String MARK_MAN = "man";
     
     
@@ -35,7 +36,7 @@ public class Arguments{
     }
     
     public void checkArgument () throws ArgumentInvalidException {
-        List<String> tabMarks = Arrays.asList(MARK_RESTART_TOMCAT, MARK_ANT, MARK_M2,MARK_DB,MARK_MAN,MARK_COMPILE,MARK_PLUGIN_DAT);
+        List<String> tabMarks = Arrays.asList(MARK_RESTART_TOMCAT, MARK_ANT, MARK_M2,MARK_DB,MARK_MAN,MARK_COMPILE,MARK_PLUGIN_DAT,MARK_CLEAN);
         for (String strArgument : getArguments()){
             if (!tabMarks.contains( strArgument )){
                 throw new ArgumentInvalidException();
