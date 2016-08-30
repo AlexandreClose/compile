@@ -20,7 +20,7 @@ public class PropertiesFile{
     private static String _fileName;
     private PropertiesUtil _propertiesUtil;
     
-    private static final String CONFIG_FILE = "src/compile/properties/config.properties";
+    private static final String CONFIG_FILE = "config.properties";
     
     public PropertiesFile(){        
     }
@@ -109,6 +109,15 @@ public class PropertiesFile{
     public boolean mustInitializePluginDat(){
         for (String arg : Arguments.getInstance().getArguments()){
             if (arg.equals(Arguments.getInstance().MARK_PLUGIN_DAT)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean mustClean(){
+        for (String arg : Arguments.getInstance().getArguments()){
+            if (arg.equals(Arguments.getInstance().MARK_CLEAN)){
                 return true;
             }
         }

@@ -19,9 +19,9 @@ public abstract class Project implements IProject{
     private String _webappName;
     private String _pathProject;
     private String _mavenCmdCompil;
+    private String _mavenCmdClean=PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnClean");
     private String _version;
     private String _artifactId;
-    private String _DB_Properties = "db.properties";
     private HashMap<String,String> _mapDependencies;
     private static final String SEP = File.separator;
     
@@ -31,6 +31,14 @@ public abstract class Project implements IProject{
 
     public void setArtifactId( String _artifactId ) {
         this._artifactId = _artifactId;
+    }
+
+    public String getMavenCmdClean() {
+        return _mavenCmdClean;
+    }
+
+    public void setMavenCmdClean( String _mavenCmdClean ) {
+        this._mavenCmdClean = _mavenCmdClean;
     }
     
     
@@ -90,6 +98,13 @@ public abstract class Project implements IProject{
     public void compile(){
         Command.run(_mavenCmdCompil ,_pathProject);
     }
+    
+    @Override
+    public void clean(){
+        Command.run(_mavenCmdClean ,_pathProject);
+    }
+    
+    
     
     @Override
     public void ant(){

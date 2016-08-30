@@ -24,6 +24,10 @@ public class Manuel{
         strBuild.append("\n");
         strBuild.append("--ant : execution des scripts ant (build.xml) du target du répertoire de travail");
         strBuild.append("\n");
+        strBuild.append("--clean : pour clean le projet");
+        strBuild.append("\n");
+        strBuild.append("--pluginDat : pour generer le fichier plugin dat et installer tous les plugins");
+        strBuild.append("\n");
         return strBuild.toString();
     }
 }

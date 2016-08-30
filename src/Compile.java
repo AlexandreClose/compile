@@ -35,9 +35,7 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        String[] test = {"--db","--compile"};
-        
-        Arguments.getInstance().setArguments(test);
+        Arguments.getInstance().setArguments(args);
         
         //Check si les arguments passés existent dans les possibilites du soft
         try{
@@ -132,6 +130,8 @@ public class Compile{
         if ( PropertiesFile.getInstance().mustRestartServer() ){
             Tomcat.getInstance().start();
         }
+        
+        System.out.println("Process termine.");
     }
     
    
