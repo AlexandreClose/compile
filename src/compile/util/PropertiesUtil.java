@@ -5,9 +5,12 @@
  */
 package compile.util;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Properties;
 
 /**
@@ -33,20 +36,18 @@ public class PropertiesUtil{
         try{
            
             Properties prop = new Properties();
-            String propFileName = fileName;
-            
-            inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+            inputStream = new FileInputStream(fileName);
             if (inputStream != null) {
                 prop.load(inputStream);
                 inputStream.close();
                 _properties=prop;
             }
             else {
-                throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+                throw new FileNotFoundException("property file '" + fileName + "' not found in the classpath");
             }
         }catch (Exception e) {
 			System.out.println("Exception: " + e);
-		} 
+	} 
         
 
     }
@@ -61,10 +62,31 @@ public class PropertiesUtil{
         }
     }
     
+    public void setParam(String strKey, String strValue){
+        _properties.setProperty(strKey , strValue );
+    }
+    
     public boolean hasProperty(String param){
         if (_properties.containsKey( param )){
             return true;
         }
         return false;
+    }
+    
+    public void save(String fileName){
+        OutputStream outputStream;
+        OutputStreamWriter outputStreamWriter;
+        try{
+            outputStream = new FileOutputStream(fileName);
+            outputStreamWriter = new OutputStreamWriter(outputStream);
+            
+            _properties.store(outputStreamWriter, null);
+            
+            outputStream.close();
+            outputStreamWriter.close();
+        }
+        catch (Exception e) {
+            System.out.println("Erreur d'écriture du fichier " + fileName);
+        }
     }
 }

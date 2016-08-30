@@ -104,37 +104,13 @@ public abstract class Project implements IProject{
     
     @Override
     public void adaptDBProperties(){
-        
-        InputStream inputStream;
-        OutputStream outputStream;
-        OutputStreamWriter outputStreamWriter;
-        
-        try{           
-            Properties prop = new Properties();
             String propFileName = getPathProject()+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"conf"+SEP+"db.properties";
             String poolUrl = "jdbc:mysql://localhost/"+PropertiesFile.getInstance().getPropertiesUtil().getParam("dbname")+"?autoReconnect=true&useUnicode=yes&characterEncoding=utf8";
-            
-            inputStream = new FileInputStream(propFileName);
-            
-            prop.load(inputStream);
-            inputStream.close();
-            prop.setProperty("portal.url", poolUrl);
-            prop.setProperty("portal.user", PropertiesFile.getInstance().getPropertiesUtil().getParam("username"));
-            prop.setProperty("portal.password", PropertiesFile.getInstance().getPropertiesUtil().getParam("mdp"));
-                        
-            outputStream = new FileOutputStream(propFileName);
-            outputStreamWriter = new OutputStreamWriter(outputStream);
-            
-            prop.store(outputStreamWriter, null);
-            
-            outputStream.close();
-            outputStreamWriter.close();
-            
-            }
-        catch (Exception e) {
-            System.out.println("Erreur de lecture du fichier de propriété db.properties: " + e);
-        }
-    
+            PropertiesUtil dbProperties = new PropertiesUtil(propFileName);
+            dbProperties.setParam( "portal.user" ,PropertiesFile.getInstance().getPropertiesUtil().getParam("username")) ;
+            dbProperties.setParam( "portal.password" ,PropertiesFile.getInstance().getPropertiesUtil().getParam("mdp")) ;
+            dbProperties.setParam( "portal.url" ,poolUrl) ;
+            dbProperties.save( propFileName );
     }
     
 }

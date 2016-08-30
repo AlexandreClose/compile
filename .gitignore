@@ -4,4 +4,7 @@ manifest.mf
 build.xml
 test/
 nbproject/
+src/config.properties
+config.properties
+*.properties
 
