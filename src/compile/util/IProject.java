@@ -13,5 +13,5 @@ public interface IProject{
     public void compile();
     public void ant();
     public void adaptDBProperties();
-    public void adaptDBProperties(String pathDbProperties);
+    public void pluginDat();
 }
