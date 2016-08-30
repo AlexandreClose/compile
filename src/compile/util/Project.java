@@ -125,8 +125,9 @@ public abstract class Project implements IProject{
     @Override
     public void pluginDat( ){
         List<String> listPlugins = new ArrayList<String>();
+        listPlugins.add("core_extensions");
         String pathPluginXmlFiles = getPathProject()+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"plugins"+SEP;
-        String pathPluginDat = pathPluginXmlFiles + "plugin.dat";
+        String pathPluginDat = pathPluginXmlFiles + "plugins.dat";
         File folder = new File(pathPluginXmlFiles);
         File[] listOfFiles = folder.listFiles();
         for (int i = 0; i < listOfFiles.length; i++) {
