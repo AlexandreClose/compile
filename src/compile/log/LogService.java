@@ -24,7 +24,7 @@ public class LogService{
     public static void adaptDB(String user, String mdp, String dbName){System.out.println("[DB_PROPERTIES] MAJ db.properties   user "+user+" mdp "+mdp+" db_name "+dbName);}
     public static void pluginDat(){System.out.println("[PLUGINS_DAT] Initialisation du fichier plugins_dat.");}
     
-    public static void wrongVersions(String artifactId, String versionWorkDir, String versionPluginInstalled){System.out.println("[ERROR_MVN_COMPARE_VERSIONS] "+artifactId+ " versionWorkDir "+versionWorkDir+" versionPlugin "+versionPluginInstalled);}
+    public static void wrongVersions(String artifactId, String versionWorkDir, String versionPluginInstalled){System.out.println("[ERROR_MVN_COMPARE_VERSIONS] "+artifactId+ " | versionWorkDir ->"+versionWorkDir+" | versionPlugin ->"+versionPluginInstalled);}
     
     public static void endProcess(){System.out.println("[END_PROCESS]");}
 }

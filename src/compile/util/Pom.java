@@ -103,9 +103,9 @@ public class Pom{
         HashMap<String,String> mapDependenciesProject = new HashMap<String,String>();
         Element racine = _xmlUtil.getRacine();
         Element projectDependencies = racine.getChild( "dependencies" , null );
-        List<Element> listProjectDependencies = projectDependencies.getChildren("dependency");
+        List<Element> listProjectDependencies = projectDependencies.getChildren("dependency" , null);
         for (Element elem : listProjectDependencies ){
-            mapDependenciesProject.put(elem.getChild("artifactId").getText(),elem.getChild("version").getText());
+            mapDependenciesProject.put(elem.getChild("artifactId",null).getText(),elem.getChild("version",null).getText());
         }
         return mapDependenciesProject;
     }
@@ -122,10 +122,17 @@ public class Pom{
         project.setPathProject(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir") );
         project.setWebappName( getWebAppNameFromProjectType(project));
         project.setVersion(getVersion());
-        project.setMapDependancies( getMapDependencies() );
         project.setArtifactId( getArtifactId());
         return project;
     }
+    
+    public Project computeWorkingProjectFromPom(){
+        Project project=computeProjectFromPom();
+        project.setMapDependancies( getMapDependencies() );
+        return project;
+    }
+    
+            
     
     public String getWebAppNameFromProjectType(Project proj){
         if (proj.getTypeProject().equals( "plugin")){

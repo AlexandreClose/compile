@@ -38,7 +38,9 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        Arguments.getInstance().setArguments(args);
+        String[] test = {"--compile","--m2","--db"};
+        
+        Arguments.getInstance().setArguments(test);
         
         //Check si les arguments passés existent dans les possibilites du soft
         try{
@@ -78,10 +80,12 @@ public class Compile{
         if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty(WORKING_DIR)){
             Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( WORKING_DIR)+SEP+POM_FILE);
             //Récupere le projet (site ou plugin) du pom
-            Project proj = pom.computeProjectFromPom();
+            Project proj = pom.computeWorkingProjectFromPom();
             
             //Ajoute le site ou projet dans le contexte du Tomcat si n'est pas déjà existant
             Tomcat.getInstance().checkIfInContextFile(proj);
+            
+            
             for (Map.Entry<String,String> entry : proj.getMapDependencies().entrySet()){
                 for (Plugin plug : listInstalledPlugin){
                     if (plug.getArtifactId().equals(entry.getKey())){
