@@ -5,6 +5,7 @@
  */
 package compile.util;
 
+import compile.log.LogService;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,11 +97,13 @@ public abstract class Project implements IProject{
     
     @Override
     public void compile(){
+        LogService.compile(_artifactId,_version);
         Command.run(_mavenCmdCompil ,_pathProject);
     }
     
     @Override
     public void clean(){
+        LogService.cleanWorkDir();
         Command.run(_mavenCmdClean ,_pathProject);
     }
     
@@ -108,11 +111,13 @@ public abstract class Project implements IProject{
     
     @Override
     public void ant(){
+        LogService.ant();
         Command.run( PropertiesFile.getInstance().getPropertiesUtil().getParam( "antCmd" ) ,_pathProject+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"sql");
     }
     
     @Override
     public void adaptDBProperties(){
+            LogService.adaptDB(PropertiesFile.getInstance().getPropertiesUtil().getParam("username"),PropertiesFile.getInstance().getPropertiesUtil().getParam("mdp"),PropertiesFile.getInstance().getPropertiesUtil().getParam("dbname"));
             String propFileName = getPathProject()+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"conf"+SEP+"db.properties";
             String poolUrl = "jdbc:mysql://localhost/"+PropertiesFile.getInstance().getPropertiesUtil().getParam("dbname")+"?autoReconnect=true&useUnicode=yes&characterEncoding=utf8";
             PropertiesUtil dbProperties = new PropertiesUtil(propFileName);
@@ -124,6 +129,7 @@ public abstract class Project implements IProject{
     
     @Override
     public void pluginDat( ){
+        LogService.pluginDat();
         List<String> listPlugins = new ArrayList<String>();
         String pathPluginXmlFiles = getPathProject()+SEP+"target"+SEP+_webappName+SEP+"WEB-INF"+SEP+"plugins"+SEP;
         String pathPluginDat = pathPluginXmlFiles + "plugin.dat";
@@ -132,7 +138,6 @@ public abstract class Project implements IProject{
         for (int i = 0; i < listOfFiles.length; i++) {
           if (listOfFiles[i].isFile()) {
             if (listOfFiles[i].getName().contains( ".xml")){
-                System.out.println(listOfFiles[i].getName());
                 listPlugins.add(listOfFiles[i].getName().split("\\.")[0]);
             }
           } 

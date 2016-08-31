@@ -5,6 +5,7 @@
  */
 package compile.util;
 
+import compile.log.LogService;
 import java.util.HashMap;
 import java.util.List;
 import org.jdom2.Element;
@@ -117,6 +118,7 @@ public class Pom{
             project = new Plugin();
         }
         else{return null;}
+        LogService.pomType(getArtifactId(),project.getTypeProject());
         project.setPathProject(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir") );
         project.setWebappName( getWebAppNameFromProjectType(project));
         project.setVersion(getVersion());

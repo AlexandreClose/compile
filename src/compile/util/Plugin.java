@@ -5,6 +5,7 @@
  */
 package compile.util;
 
+import compile.log.LogService;
 import java.io.File;
 
 /**
@@ -22,6 +23,7 @@ public class Plugin extends Project{
     }
     
     public void installInM2(){
+        LogService.pluginInstalledInM2( getArtifactId(), getVersion());
         Command.run(PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnInstallM2Cmd") ,super.getPathProject());
     }
     

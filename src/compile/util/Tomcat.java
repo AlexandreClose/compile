@@ -5,6 +5,7 @@
  */
 package compile.util;
 
+import compile.log.LogService;
 import java.io.File;
 import java.util.List;
 import org.jdom2.Element;
@@ -66,17 +67,19 @@ public class Tomcat{
     }
     
     public void start(){
-        
+        LogService.tomcatStart();
         Command.run( getTomcatStartUpCmd(  ), _tomcatPath );
         
     }
     
     public void stop(){
+        LogService.tomcatStop();
         Command.run( getTomcatShutdownCmd(),_tomcatPath);
         
     }
     
     public void checkIfInContextFile(Project proj){
+        LogService.tomcatAddingContext( PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDirContext" ) );
         Element racine = _serverXml.getRacine();
         Element service = racine.getChild( "Service" , null );
         Element engine = service.getChild( "Engine" , null );

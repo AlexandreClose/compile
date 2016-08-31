@@ -84,7 +84,6 @@ public class XMLUtil{
         SAXBuilder sxb = new SAXBuilder();
         try
         {
-            System.out.println(_strPath);
            _document = sxb.build(new File(_strPath));
            _racine = _document.getRootElement();
         }

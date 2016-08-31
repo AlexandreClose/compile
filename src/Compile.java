@@ -6,6 +6,7 @@
 
 
 import compile.exceptions.ArgumentInvalidException;
+import compile.log.LogService;
 import compile.util.Arguments;
 import compile.util.Plugin;
 import compile.util.Pom;
@@ -31,6 +32,8 @@ public class Compile{
      */
     
     private static final String POM_FILE = "pom.xml";
+    private static final String WORKING_DIR = "workingDir";
+    private static final String PLUGIN_TYPE = "plugin";
     private static final String SEP = File.separator;
     
     public static void main( String[] args ) {
@@ -50,23 +53,21 @@ public class Compile{
         Arguments.getInstance().checkMan();
 
         
-        PropertiesFile.getInstance().getPropertiesUtil().showProperties();
-        
         //Eteint le server Tomcat si c'est demandé par l'argument --restart
         if ( PropertiesFile.getInstance().mustRestartServer() ){
             Tomcat.getInstance().stop();
+           
         }
         
         //Si l'utilisateur veut installer des plugins de travail dans le répertoire m2
         List<Plugin> listInstalledPlugin= new ArrayList<Plugin>(); 
         if(PropertiesFile.getInstance().mustM2()){
             for (String key : PropertiesFile.getInstance().getPropertiesUtil().getProperties().stringPropertyNames()){
-                 if ( key.contains( "plugin")){
+                 if ( key.contains(PLUGIN_TYPE)){
                      if (PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )!=null && !PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key ).equals("")){
                          Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getProperties().get( key )+SEP+POM_FILE);
                          Project project = pom.computeProjectFromPom();
                          Plugin plugin = (Plugin)project;
-                         System.out.println("Plugin installé dans M2 : "+plugin.getArtifactId()+" avec la version : "+plugin.getVersion());
                          plugin.installInM2();
                          listInstalledPlugin.add(plugin);
                      }
@@ -74,15 +75,8 @@ public class Compile{
              }
         } 
         
-        //Les plugins de travail sont listés avec leur version
-        for (Plugin plug : listInstalledPlugin){
-            for (Map.Entry<String,String> entry : plug.getMapDependencies().entrySet()){
-                System.out.println("dependance : "+entry.getKey()+ " version :"+entry.getValue() );
-            }
-        }
-        
-        if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty("workingDir")){
-            Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( "workingDir")+SEP+POM_FILE);
+        if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty(WORKING_DIR)){
+            Pom pom = new Pom(PropertiesFile.getInstance().getPropertiesUtil().getParam( WORKING_DIR)+SEP+POM_FILE);
             //Récupere le projet (site ou plugin) du pom
             Project proj = pom.computeProjectFromPom();
             
@@ -93,7 +87,7 @@ public class Compile{
                     if (plug.getArtifactId().equals(entry.getKey())){
                         //Si les versions des plugins (entre le m2 et le site/plugin principal) ne sont pas les mêmes.
                         if (!plug.getVersion().equals( entry.getValue() )){
-                            System.out.println("Les version du plugin "+plug.getArtifactId()+" ne concordent pas dans le working dir et les plugins M2 !");
+                            LogService.wrongVersions( plug.getArtifactId(), entry.getValue(), plug.getVersion());
                             System.exit( 0 );
                         }
                     }
@@ -131,7 +125,7 @@ public class Compile{
             Tomcat.getInstance().start();
         }
         
-        System.out.println("Process termine.");
+        LogService.endProcess();
     }
     
    
