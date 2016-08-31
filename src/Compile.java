@@ -38,9 +38,7 @@ public class Compile{
     
     public static void main( String[] args ) {
         
-        String[] test = {"--compile","--m2","--db"};
-        
-        Arguments.getInstance().setArguments(test);
+        Arguments.getInstance().setArguments(args);
         
         //Check si les arguments passés existent dans les possibilites du soft
         try{
