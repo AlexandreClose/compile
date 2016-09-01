@@ -97,7 +97,7 @@ public abstract class Project implements IProject{
     
     @Override
     public void compile(){
-        LogService.compile(_artifactId,_version);
+        LogService.compile(_artifactId,_version,_mavenCmdCompil);
         Command.run(_mavenCmdCompil ,_pathProject);
     }
     

@@ -17,7 +17,7 @@ public class LogService{
     public static void pluginInstalledInM2(String artifactId, String version){System.out.println("[MVN_INSTALL] plugin -> M2 : "+artifactId+"      version : "+version);}
     public static void pomType(String artifactId,String type){System.out.println("[MVN_POM_TYPE] Pom de "+type+" -> "+artifactId);}
     public static void cleanWorkDir(){System.out.println("[MVN_CLEAN] Nettoyage du target");}
-    public static void compile(String artifactId,String version){System.out.println("[MVN_COMPILE] "+artifactId+ " version "+version);}
+    public static void compile(String artifactId,String version,String cmd){System.out.println("[MVN_COMPILE] "+artifactId+ " version "+version + " with "+cmd);}
     
     public static void ant(){System.out.println("[ANT] Execution des scripts Ant");}
     
