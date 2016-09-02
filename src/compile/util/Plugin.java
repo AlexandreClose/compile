@@ -18,13 +18,13 @@ public class Plugin extends Project{
     private static final String SEP = File.separator;
        
     Plugin(){
-        super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnPluginCompilCmd"));
+        super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnPluginCompilCmd")+ " " +PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnPluginCompilLog"));
         super.setTypeProject( PLUGIN_TYPE);
     }
     
     public void installInM2(){
         LogService.pluginInstalledInM2( getArtifactId(), getVersion());
-        Command.run(PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnInstallM2Cmd") ,super.getPathProject());
+        Command.run(PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnInstallM2Cmd") + " " + PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnInstallLog") ,super.getPathProject());
     }
     
 }

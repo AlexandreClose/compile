@@ -104,7 +104,7 @@ public abstract class Project implements IProject{
     @Override
     public void clean(){
         LogService.cleanWorkDir();
-        Command.run(_mavenCmdClean ,_pathProject);
+        Command.run(_mavenCmdClean +" "+PropertiesFile.getInstance().getPropertiesUtil().getParam("mvnCleanLog"),_pathProject);
     }
     
     

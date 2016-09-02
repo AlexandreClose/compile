@@ -27,10 +27,10 @@ public class Site extends Project{
         
         if (PropertiesFile.getInstance().getPropertiesUtil().hasProperty( "profile")){
             setProfile(PropertiesFile.getInstance().getPropertiesUtil().getParam( "profile") );
-            super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" )+" "+PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnProfileCmd" )+" "+PropertiesFile.getInstance().getPropertiesUtil().getParam( "profile" ));
+            super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" )+" "+PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnProfileCmd" )+" "+PropertiesFile.getInstance().getPropertiesUtil().getParam( "profile" ) + " " +PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteLogCmd" ));
         }
         else{
-            super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" ));
+            super.setMavenCmdCompil( PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteCompilCmd" ) + " " + PropertiesFile.getInstance().getPropertiesUtil().getParam( "mvnSiteLogCmd" ));
         }  
     }
 }
